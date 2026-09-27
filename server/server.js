@@ -13,11 +13,16 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://event-booking-vipul-89bf.vercel.app',
-    'https://event-booking-gamma-ochre.vercel.app'
-  ],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (
+      origin === 'http://localhost:5173' ||
+      origin.endsWith('.vercel.app')
+    ) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 app.use(express.json());
