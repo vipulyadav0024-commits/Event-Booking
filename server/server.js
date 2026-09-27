@@ -12,7 +12,14 @@ const bookingRoutes = require('./routes/bookings');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://event-booking-vipul-89bf.vercel.app',
+    'https://event-booking-gamma-ochre.vercel.app'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes
